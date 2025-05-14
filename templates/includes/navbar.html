@@ -1,0 +1,91 @@
+{% load static %}
+<header class="header-area header-sticky">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav class="main-nav">
+                    <!-- ***** Logo Start ***** -->
+                    <a href="{% url 'home' %}" class="logo">
+                        <img src="{% static 'images/logo_p.png' %}" alt="Logo" width="120" height="auto">
+                        <span style="font-size: 24px; font-weight: bold; color: #333;">PShop</span>
+                    </a>
+                    <!-- ***** Logo End ***** -->
+                    
+                    <!-- ***** Menu Start ***** -->
+                    <ul class="nav">
+                        <li class="scroll-to-section"><a href="{% url 'home' %}" class="{% if request.path == '/' %}active{% endif %}">Home</a></li>
+                        <li class="scroll-to-section"><a href="{% url 'show_products' %}" class="{% if request.path == '/products/' %}active{% endif %}">Our Products</a></li>
+                        <li class="scroll-to-section"><a href="{% url 'show_supplier' %}" class="{% if request.path == '/suppliers/' %}active{% endif %}">Suppliers</a></li>
+                        <li class="scroll-to-section"><a href="{% url 'show_manufacturer' %}" class="{% if request.path == '/manufacturers/' %}active{% endif %}">Manufacturer</a></li>
+
+                        <!-- Analytics Link - Only show for staff/admin -->
+                        {% if user.is_staff %}
+                        <li class="scroll-to-section">
+                            <a href="{% url 'sales_analytics' %}" class="{% if request.path == '/analyticsapp/sales/' %}active{% endif %}">
+                                <i class="fas fa-chart-line"></i> Analytics
+                            </a>
+                        </li>
+                        {% endif %}
+                        
+                        <!-- Always visible cart icon -->
+                        <li class="nav-item mx-2">
+                            <a href="{% url 'show_cart' %}" class="nav-link {% if request.path == '/cart/' %}active{% endif %}">
+                                <span id="cart-count" class="badge bg-danger" style="font-size: 1rem;">{{total_items|default:0}}</span>
+                                <i class="fa-solid fa-cart-shopping"></i>
+                            </a>
+                        </li>
+                        
+                        {% if user.is_authenticated %}
+                            {% if user.profile_picture %}
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownProfile" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img src="{{ user.profile_picture.url }}" class="rounded-circle border"
+                                        alt="Profile Picture" width="40" height="40">
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownProfile">
+                                    <li><a class="dropdown-item" href="{% url 'myAccount' %}">My Account</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'order_list' %}">My Orders</a></li>
+                                    <li><a href="{% url 'show_wishlist' %}" class="dropdown-item">My Wishlist</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                                </ul>
+                            </li>
+                            {% endif %}
+                        {% else %}
+                            <li class="nav-item"><a class="nav-link" href="{% url 'customer_login' %}">Sign in</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'customer_registration' %}">Register</a></li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+<style>
+    /* Ensure cart icon is properly styled */
+    .nav-link.active {
+        color: #fff !important;
+        background-color: #d32f2f;
+        border-radius: 4px;
+    }
+    
+    .nav-item .nav-link {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+    
+    /* Make cart icon more prominent */
+    .fa-cart-shopping {
+        font-size: 1.2rem;
+    }
+    
+    /* Badge styling */
+    .badge.bg-danger {
+        position: relative;
+        top: -8px;
+        right: 5px;
+    }
+</style>

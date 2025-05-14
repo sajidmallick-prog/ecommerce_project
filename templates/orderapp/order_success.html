@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="product-hero">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-10 text-center">
+        <div class="hero-content">
+          <span class="hero-subtitle">Order Now</span>
+          <h1 class="hero-title">Our Premium Products</h1>
+          <div class="hero-divider"></div>
+          <p class="hero-description">Discover excellence in every detail</p>
+          <a href="{% url 'show_products' %}" class="btn btn-primary hero-cta">Shop Now</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .product-hero {
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                url('https://example.com/your-product-image.jpg') center/cover no-repeat;
+    color: #fff;
+    padding: 100px 0;
+    text-align: center;
+    position: relative;
+  }
+
+  .hero-subtitle {
+    display: block;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: #ff6b6b;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+  }
+
+  .hero-title {
+    font-size: 48px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    line-height: 1.2;
+    text-transform: capitalize;
+  }
+
+  .hero-divider {
+    width: 80px;
+    height: 3px;
+    background: #ff6b6b;
+    margin: 0 auto 20px;
+  }
+
+  .hero-description {
+    font-size: 20px;
+    opacity: 0.9;
+    margin-bottom: 30px;
+  }
+
+  .hero-cta {
+    padding: 12px 30px;
+    font-weight: 600;
+    border-radius: 30px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+  }
+
+  .hero-cta:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  @media (max-width: 768px) {
+    .product-hero {
+      padding: 70px 0;
+    }
+    .hero-title {
+      font-size: 36px;
+    }
+    .hero-description {
+      font-size: 18px;
+    }
+  }
+</style>
+
+
+
+<div class="container text-center">
+  <h2 class="my-4">Order Placed Successfully! 🎉</h2>
+  <p>Thank you for your order. We will process it soon.</p>
+  <br>
+  {% if order %}
+      <a href="{% url 'download_order_pdf' order.id %}" class="btn btn-primary mb-2">Download Invoice PDF</a>
+  {% endif %}
+  <br>
+  <a href="{% url 'home' %}" class="btn btn-success">Return to Home</a>
+</div>
+
+{% endblock %}

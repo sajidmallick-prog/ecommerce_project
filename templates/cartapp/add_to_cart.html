@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Cart{% endblock title %}
+
+{% block content %}
+
+<div class="container my-5">
+    <h1 class="text-center mb-4">Your Shopping Cart (<span id="cart-count">{{ total_item }}</span> items)</h1>
+
+    {% if messages %}
+    {% for message in messages %}
+    <p class="alert alert-{{ message.tags }}">{{ message }}</p>
+    {% endfor %}
+    {% endif %}
+
+    {% if carts %}
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h4 class="mb-3">Cart Items</h4>
+                    {% for cart in carts %}
+                        <hr>
+                        <div class="row align-items-center">
+                            <div class="col-md-1 text-center">
+                                <input type="checkbox" name="selected_items" value="{{ cart.id }}" {% if cart.is_active %}checked{% endif %}>
+                            </div>
+                            <div class="col-md-3 text-center">
+                                <img src="{{ cart.product.cover_image.url }}" alt="{{ cart.product.product_name }}" class="img-fluid img-thumbnail" height="100" width="100">
+                            </div>
+                            <div class="col-md-6">
+                                <h5>{{ cart.product.product_name }}</h5>
+                                <p><strong>Price:</strong> Rs. {{ cart.product.price }}</p>
+                                <div class="d-flex align-items-center">
+                                    <label for="quantity">Quantity:</label>
+                                    <a class="btn btn-light mx-2 minus-cart" pid="{{ cart.product.id }}"><i>-</i></a>
+                                    <span id="quantity" name="quantity">{{ cart.quantity }}</span>
+                                    <a class="btn btn-light mx-2 plus-cart" pid="{{ cart.product.id }}"><i>+</i></a>
+                                </div>
+                            </div>
+                            <div class="col-md-2 text-end">
+                                <a class="btn btn-sm btn-danger remove-cart" pid="{{ cart.product.id }}">Remove</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h4 class="mb-3">Order Summary</h4>
+                    <ul class="list-group">
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>Subtotal</span>
+                            <strong>Rs. <span id="amount">{{ amount|floatformat:2 }}</span></strong>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>Shipping</span>
+                            <strong>Rs. 70.00</strong>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>Total</span>
+                            <strong>Rs. <span id="totalamount">{{ total_amount|floatformat:2 }}</span></strong>
+                        </li>
+                    </ul>
+        
+                    <!-- Hidden Inputs for Payment -->
+                    <input type="hidden" name="csrfmiddlewaretoken" id="csrf-token" value="{{ csrf_token }}">
+                    <input type="hidden" name="amount" id="amount-input" value="{{ total_amount }}">
+        
+                    {% if carts %}
+                        <input type="hidden" name="product_id" value="{{ carts.0.product.id }}">
+                        <input type="hidden" name="category_id" value="{{ carts.0.product.category.id }}">
+                        <input type="hidden" name="quantity" id="quantity" value="{{ carts.0.quantity }}">
+
+                    {% endif %}
+        
+                    <button type="submit" class="btn btn-dark mt-3 w-100" id="proceed-to-pay-btn">Proceed to Pay Now</button>
+                </div>
+            </div>
+        </div>        
+    </div>
+    {% else %}
+    <div class="text-center">
+        <h3>Your Cart is Empty</h3>
+        <a href="{% url 'show_products' %}" class="btn btn-primary">Browse Products</a>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}

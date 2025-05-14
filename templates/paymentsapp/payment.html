@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Page Content -->
+<div class="page-heading contact-heading header-text py-5 bg-gradient text-white">
+  <div class="container">
+    <div class="row justify-content-center align-items-center text-center">
+      <div class="col-lg-8 col-md-10">
+        <div class="text-content">
+          <!-- Section Title -->
+          <h4 class="text-uppercase text-secondary mb-3" style="letter-spacing: 2px; font-weight: 500;">Our Trusted Manufacturers</h4>
+          
+          <!-- Main Heading -->
+          <h2 class="display-4 fw-bold mb-3" style="line-height: 1.4;">Let’s Get to Know Them Better</h2>
+          
+          <!-- Subtitle / Description -->
+          <p class="text-light mt-3" style="font-size: 1.1rem; max-width: 650px; margin-left: auto; margin-right: auto;">We collaborate with leading brands worldwide, delivering quality products that meet your needs and exceed expectations.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Additional CSS to Enhance Appearance -->
+<style>
+  .page-heading {
+    background: linear-gradient(45deg, #232526, #414345); /* Dark gradient */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+  }
+
+  .text-content h2 {
+    color: #fff;
+    text-transform: uppercase;
+  }
+
+  .text-content p {
+    font-family: 'Arial', sans-serif;
+    font-weight: 300;
+  }
+
+  .container {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+</style>
+
+
+<!-- Page Content Ends -->
+<div class="team-members">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="section-heading">
+          <h2>Payment</h2>
+        </div>
+      </div>
+
+      <div class="col-md-12">
+        <div class="section-heading">
+          <form id="payment-form" method="POST" action="">
+            {% csrf_token %}
+            <div class="form-group">
+              <input type="hidden" name="product_id" value="{{ product_id }}">
+              <input type="hidden" name="category_id" value="{{ category_id }}">
+              <input type="hidden" name="quantity" value="{{ quantity }}">
+              <input type="hidden" name="amount" value="{{ amount }}">
+              <label>Amount (INR):</label>
+              <input type="number" id="amount" name="amount" class="form-control" value="{{ amount }}" disabled/>
+            </div>
+            <button id="pay-button" class="btn btn-success">Pay Now</button>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

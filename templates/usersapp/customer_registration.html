@@ -1,0 +1,174 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Registration Hero Section -->
+<section class="registration-hero py-5 py-lg-6 bg-primary bg-gradient position-relative overflow-hidden">
+    <div class="container position-relative z-index-1">
+      <div class="row justify-content-center text-center">
+        <div class="col-lg-8 col-xl-7">
+          <div class="hero-content px-3 px-sm-4">
+            <!-- Subheading -->
+            <p class="text-white text-uppercase mb-3 letter-spacing-2 fw-semibold small">
+              Join Our Community
+            </p>
+            
+            <!-- Main heading -->
+            <h1 class="display-4 fw-bold text-white mb-3">Create Your Account</h1>
+            
+            <!-- Description -->
+            <p class="lead text-white text-opacity-85 mb-0">
+              Register now to unlock exclusive features and personalized experiences
+            </p>
+            
+            <!-- Decorative elements -->
+            <div class="d-flex justify-content-center mt-4">
+              <div class="border-top border-white border-opacity-25 w-25 mx-2"></div>
+              <i class="fas fa-user-plus text-white opacity-75 mx-3"></i>
+              <div class="border-top border-white border-opacity-25 w-25 mx-2"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Background pattern overlay -->
+    <div class="position-absolute top-0 start-0 w-100 h-100 bg-primary opacity-90"></div>
+    <div class="position-absolute top-0 start-0 w-100 h-100 bg-pattern opacity-05"></div>
+  </section>
+  
+  <style>
+    .registration-hero {
+      min-height: 300px;
+    }
+    
+    .bg-gradient {
+      background: linear-gradient(135deg, #0d6efd 0%, #0b5ed7 100%);
+    }
+    
+    .bg-pattern {
+      background-image: radial-gradient(rgba(255,255,255,0.15) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+    
+    .letter-spacing-2 {
+      letter-spacing: 2px;
+    }
+    
+    .z-index-1 {
+      z-index: 1;
+    }
+    
+    .py-5 {
+      padding-top: 3rem;
+      padding-bottom: 3rem;
+    }
+    
+    .py-lg-6 {
+      padding-top: 4rem;
+      padding-bottom: 4rem;
+    }
+    
+    @media (max-width: 992px) {
+      h1 {
+        font-size: 2.5rem;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .registration-hero {
+        min-height: 250px;
+      }
+      
+      h1 {
+        font-size: 2rem;
+      }
+      
+      .lead {
+        font-size: 1.1rem;
+      }
+      
+      .py-5 {
+        padding-top: 2.5rem;
+        padding-bottom: 2.5rem;
+      }
+    }
+  </style>
+
+<section style="padding-top: 120px; padding-bottom: 50px;">
+    <div class="d-flex justify-content-center align-items-center">
+        <div class="col-md-8"> 
+            <div class="col-md-12 text-center">
+                <div class="section-heading">
+                    <h2>Customer Registration</h2>
+                </div>
+            </div>
+            <div class="contact-form shadow-lg p-4 bg-white rounded">
+                <form id="customer-registration-form" action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-lg-12 mb-3">
+                            <label for="first_name">First Name</label>
+                            <input name="first_name" type="text" class="form-control" id="first_name" placeholder="First Name" onkeypress="return validatefirstname(event)">
+                            <small id="first_name_error" class="text-danger"></small>
+                        </div>
+                        <div class="col-lg-12 mb-3">
+                            <label for="last_name">Last Name</label>
+                            <input name="last_name" type="text" class="form-control" id="last_name" placeholder="Last Name" onkeypress="return validatelastname(event)">
+                            <small id="last_name_error" class="text-danger"></small>
+                        </div>
+                        <div class="col-lg-12 mb-3">
+                            <label for="username"> Username</label>
+                            <input name="username" type="text" class="form-control" id="username" placeholder="username" oninput="return validateusername(event)">
+                            <small id="username_error" class="text-danger"></small>
+                        </div>
+                        <div class="col-lg-12 mb-3">
+                            <label for="dob">Date of Birth</label>
+                            <input name="dob" type="date" class="form-control" id="dob">
+                        </div>
+                        <div class="col-lg-12 mb-3">
+                            <label for="gender">Gender</label>
+                            <select name="gender" class="form-control" id="gender">
+                                <option class="form-control" value="" disabled selected>Select Gender</option>
+                                {% for value, label in gender_choices %}
+                                    <option value="{{ value }}">{{ label }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-lg-12 mb-3">
+                            <label for="phone">Phone</label>
+                            <input name="phone" type="text" class="form-control" id="phone" placeholder="Phone" onkeypress="return validatephone(event)">
+                            <small id="phone_error" class="text-danger"></small>
+                        </div>
+                        <div class="col-lg-12 mb-3">
+                            <label for="address">Address</label>
+                            <textarea name="address" rows="4" class="form-control" id="address" placeholder="Address" oninput="return validateaddress(event)"></textarea>
+                            <small id="address_error" class="text-danger"></small>
+                        </div>
+                        <div class="col-lg-12 mb-3">
+                            <label for="email">Email</label>
+                            <input name="email" type="email" class="form-control" id="email" placeholder="Email" oninput="return validateemail(event)">
+                            <small id="email_error" class="text-danger"></small>
+                        </div>
+                        <div class="col-lg-12 mb-3">
+                            <label for="password">Password</label>
+                            <input name="password" type="password" class="form-control" id="password" placeholder="Password" oninput="return validatepassword(event)">
+                            <small id="password_error" class="text-danger"></small>
+                        </div>
+                        <div class="col-lg-12 mb-3">
+                            <label for="profile_picture">Profile Picture</label>
+                            <input type="file" name="profile_picture" class="form-control" id="profile_picture">
+                            <small id="profile_picture_error" class="text-danger"></small>
+                        </div>
+                        <div class="col-lg-12">
+                            <button type="submit" id="register-btn" class="filled-button">Register</button>
+                            <small style="padding-left: 10px;">Existing User? <a href="{% url 'customer_login' %}" class="text-danger">Login Now</a> </small>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}

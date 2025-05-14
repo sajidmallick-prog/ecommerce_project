@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- Login Hero Section -->
+<section class="login-hero py-6 py-lg-7 bg-dark position-relative overflow-hidden">
+    <div class="container position-relative z-index-1">
+      <div class="row justify-content-center">
+        <div class="col-lg-10 col-xl-8 text-center">
+          <div class="hero-content px-3">
+            <!-- Subheading -->
+            <p class="text-uppercase text-white-50 mb-3 letter-spacing-2 fw-semibold small">
+              Welcome back
+            </p>
+            
+            <!-- Main heading -->
+            <h1 class="display-4 fw-bold text-white mb-4">Login to Your Account</h1>
+            
+            <!-- Description text -->
+            <p class="lead text-white text-opacity-75 mb-0">
+              Access your orders, wishlist and personalized recommendations
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Background overlay -->
+    <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-60"></div>
+    
+    <!-- Background image (replace with your image) -->
+    <div class="position-absolute top-0 start-0 w-100 h-100 bg-cover bg-center" 
+         style="background-image: url('https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');">
+    </div>
+  </section>
+  
+  <style>
+    .login-hero {
+      min-height: 300px;
+    }
+    
+    .letter-spacing-2 {
+      letter-spacing: 2px;
+    }
+    
+    .bg-cover {
+      background-size: cover;
+    }
+    
+    .bg-center {
+      background-position: center;
+    }
+    
+    .z-index-1 {
+      z-index: 1;
+    }
+    
+    .py-6 {
+      padding-top: 5rem;
+      padding-bottom: 5rem;
+    }
+    
+    .py-lg-7 {
+      padding-top: 6rem;
+      padding-bottom: 6rem;
+    }
+    
+    @media (max-width: 992px) {
+      .display-lg-2 {
+        font-size: calc(1.425rem + 2.1vw);
+      }
+      
+      .py-6 {
+        padding-top: 4rem;
+        padding-bottom: 4rem;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .login-hero {
+        min-height: 250px;
+      }
+      
+      h1 {
+        font-size: 2.25rem;
+      }
+      
+      .lead {
+        font-size: 1.1rem;
+      }
+    }
+  </style>
+  <section style="padding-top: 120px; padding-bottom: 50px;">
+    <div class="d-flex justify-content-center align-items-center">
+        <div class="col-md-8"> 
+            <div class="col-md-12 text-center">
+                <div class="section-heading">
+                    <h2>Login</h2>
+                </div>
+            </div>
+            <div class="contact-form shadow-lg p-4 bg-white rounded">
+                <form id="customer-registration-form" action="" method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-lg-12 mb-3">
+                            <label for="email">Email</label>
+                            <input name="email" type="email" class="form-control" id="email" placeholder="Email" required>
+                        </div>
+                        <div class="col-lg-12 mb-3">
+                            <label for="password">Password</label>
+                            <input name="password" type="password" class="form-control" id="password" placeholder="Password" required>
+                        </div>
+                        <div class="col-lg-12">
+                            <button type="submit" id="login-btn" class="filled-button">Login</button>
+                            <small style="padding-left: 10px;">New to ShoppinglyX? <a href="{% url 'customer_registration' %}" class="text-danger">Create an Account</a> </small>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+
