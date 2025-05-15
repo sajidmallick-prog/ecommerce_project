@@ -2,7 +2,6 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 import matplotlib
-
 from decouple import config
 
 load_dotenv()
