@@ -9,16 +9,14 @@ from .serializers import ProductSerializer
 from django.db.models import Avg
 
 
-def show_products(request):
-
-   from django.shortcuts import render
-from django.core.paginator import Paginator
 from django.db.models import Avg
+from django.core.paginator import Paginator
+from django.shortcuts import render
 from .models import Product, Category
 
 def show_products(request, category=None):
-    # Get base queryset
-    products = Product.objects.all().annotate(average_rating=Avg('review__rating'))
+    # Get base queryset with ordering to fix UnorderedObjectListWarning
+    products = Product.objects.all().annotate(average_rating=Avg('review__rating')).order_by('id')  # or any suitable field
     
     # Filter by category if specified (either through URL or query parameter)
     category_filter = category or request.GET.get('category')
@@ -37,7 +35,7 @@ def show_products(request, category=None):
     for cat in categories:
         category_products[f"{cat.lower()}_products"] = Product.objects.filter(
             category__name__iexact=cat
-        ).annotate(average_rating=Avg('review__rating'))[:4]
+        ).annotate(average_rating=Avg('review__rating')).order_by('-id')[:4]  # recent 4 items
     
     context = {
         "page_obj": page_obj,
@@ -47,12 +45,6 @@ def show_products(request, category=None):
     }
     
     return render(request, "productapp/products.html", context)
-
-def product_detail(request, pk):
-    product = Product.objects.filter(pk=pk).annotate(
-        average_rating=Avg('review__rating')
-    ).first()
-    return render(request, "productapp/product_detail.html", {"product": product})
 
   
     # products = Product.objects.all()

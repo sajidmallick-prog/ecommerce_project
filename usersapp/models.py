@@ -4,7 +4,7 @@ from django.db import models
 class User(AbstractUser):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
-    username = models.CharField(max_length=50, unique=False, blank=True, null=True)  # must be unique
+    username = models.CharField(max_length=50, unique=False, blank=True, null=True)  # Allow blank usernames
     email = models.EmailField(unique=True)
     phone = models.CharField(max_length=15, unique=True, blank=True, null=True)
     profile_picture = models.ImageField(upload_to="profile_pictures/", blank=True, null=True)
@@ -16,16 +16,17 @@ class User(AbstractUser):
     address = models.TextField(null=True, blank=True)
     user_type = models.CharField(
         max_length=10, choices=[('customer', 'Customer'), ('admin', 'Admin')],
-        default='customer'
+        default='customer'  # Default to 'customer'
     )
 
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = 'email'  # Login with email instead of username
     REQUIRED_FIELDS = ['first_name', 'last_name', 'username']  # <-- ADD username here
 
     def save(self, *args, **kwargs):
-        if not self.username and self.email:
+        # Auto-generate a username if it's blank
+        if not self.username:
             self.username = f"user_{self.email.split('@')[0]}"
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return self.email
+        return self.email  # Using email as the primary identifier

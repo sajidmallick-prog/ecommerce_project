@@ -10,7 +10,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.show, name='home'),
     path('users/', include('usersapp.urls')),
-     # Add this redirect for old URLs
+    #  Add this redirect for old URLs
     path('usersapp/myAccount/', RedirectView.as_view(url='/users/myAccount/', permanent=True)),
     path('category/', include('categoriesapp.urls')), 
     path('supplier/', include('supplierapp.urls')),
@@ -22,7 +22,7 @@ urlpatterns = [
     path('orderitem/', include('orderitemapp.urls')),
     path('reviews/', include('reviewsapp.urls')),
     path('wishlist/', include('wishlistapp.urls')),
-    path('analytics/', include('analyticsapp.urls')), 
+  
 ]
 
 if settings.DEBUG:

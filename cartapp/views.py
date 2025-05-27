@@ -73,12 +73,11 @@ def add_to_cart(request):
 def show_cart(request):
     all_cart_items = Cart.objects.filter(user=request.user)
     active_cart_items = all_cart_items.filter(is_active=True)
-    
-    # Count only ACTIVE items to match other views
-    total_item_count = active_cart_items.count()
-    print(f"Active Items in Cart: {total_item_count}")
+    total_item_count = all_cart_items.count()
+    print(f"Total Items in Cart: {total_item_count}")
 
-    if active_cart_items.exists():
+    if all_cart_items.exists():
+        # Calculate amount only from active items
         amount = active_cart_items.aggregate(
             total=Sum(F('quantity') * F('product__price'), output_field=DecimalField())
         )['total'] or Decimal("0.00")
@@ -87,11 +86,10 @@ def show_cart(request):
         total_amount = amount + shipping_amount
 
         context = {
-            'carts': all_cart_items,  # Show all items in template
-            'active_carts': active_cart_items,  # New - pass active items separately
+            'carts': all_cart_items,  # still show all items
             'amount': amount.quantize(Decimal("0.00")),
             'total_amount': total_amount.quantize(Decimal("0.00")),
-            'total_item': total_item_count  # Now shows active count
+            'total_item': total_item_count
         }
         return render(request, 'cartapp/add_to_cart.html', context)
 
@@ -113,7 +111,8 @@ def cart_totals(request):
         return JsonResponse({
             'amount': f"{amount:.2f}",
             'shipping': f"{shipping_amount:.2f}",
-            'total_amount': f"{total_amount:.2f}"
+            'total_amount': f"{total_amount:.2f}",
+            'cart_count': active_items.count()
         })
     return JsonResponse({'error': 'Unauthorized'}, status=401)  
 
@@ -135,6 +134,7 @@ def toggle_cart_item(request):
         return JsonResponse({'status': 'success', 'message': f'Cart item {cart_id} updated.'})
     except Cart.DoesNotExist:
         return JsonResponse({'status': 'error', 'message': 'Cart item not found.'}, status=404)
+
 
 @custom_login_required
 def update_cart(request):

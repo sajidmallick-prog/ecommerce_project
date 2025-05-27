@@ -5,8 +5,8 @@ from categoriesapp.models import Category
 from manufacturerapp.models import Manufacturer
 
 class ProductSerializer(serializers.ModelSerializer):
-    supplier = serializers.StringRelatedField()  # Returns author's name instead of ID
-    manufacturer = serializers.StringRelatedField()  # Returns publisher's name instead of ID
+    supplier = serializers.StringRelatedField()  # Returns suplliers name instead of ID
+    manufacturer = serializers.StringRelatedField()  # Returns manufacturers name instead of ID
     category = serializers.StringRelatedField()  # Returns category's name instead of ID
 
     class Meta:

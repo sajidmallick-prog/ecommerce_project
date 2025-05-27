@@ -8,8 +8,7 @@ class ProductAdmin(admin.ModelAdmin):
     search_fields = ('product_name', 'supplier__name', 'manufacturer__name', 'category__name')
     list_filter = ('supplier', 'manufacturer', 'category', 'created_at')
     ordering = ('-created_at',)
-    # readonly_fields = ('cover_preview', 'pdf_link')
-
+   
     def cover_preview(self, obj):
         """Display a small preview of the book cover image."""
         if obj.cover_image:
@@ -18,13 +17,4 @@ class ProductAdmin(admin.ModelAdmin):
 
     cover_preview.allow_tags = True
     cover_preview.short_description = "Cover Preview"
-
-    # def pdf_link(self, obj):
-    #     """Provide a clickable link to the uploaded PDF file."""
-    #     if obj.pdf_file:
-    #         return format_html('<a href="{}" target="_blank">View PDF</a>', obj.pdf_file.url)
-    #     return "No PDF"
-
-    # pdf_link.allow_tags = True
-    # pdf_link.short_description = "PDF File"
 

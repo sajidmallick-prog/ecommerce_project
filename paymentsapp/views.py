@@ -24,43 +24,6 @@ def payment(request):
     amount = request.POST.get("amount")
     return render(request, "paymentsapp/payment.html", {"amount": amount})
 
-# def send_product_pdf_email(user, order):
-#     subject = "Order Confirmation - Your productstore Purchase"
-#     message = f"""
-# Hi {user.first_name or user.username},
-
-# Thank you for your order!
-
-# Order ID: #{order.id}
-# Order Total: ₹{order.total_price}
-# Payment ID: {order.payment.transaction_id if order.payment else 'N/A'}
-
-# Your purchased product(s) are attached as PDF.
-
-# Happy reading! 📚
-# — Online productstore Team
-# """
-
-#     email = EmailMessage(
-#         subject=subject,
-#         body=message,
-#         from_email=settings.DEFAULT_FROM_EMAIL,
-#         to=[user.email],
-#     )
-
-#     # ✅ Attach product PDFs from order items
-#     for item in order.items.all():  # Assuming related_name='items' in OrderItem
-#         product = item.product
-#         if product.pdf:
-#             try:
-#                 pdf_path = product.pdf.path
-#                 if os.path.exists(pdf_path):
-#                     email.attach_file(pdf_path)
-#             except Exception as e:
-#                 print(f"⚠️ Could not attach file for product '{product.product_name}': {e}")
-
-#     email.send(fail_silently=False)
-
 
 def order_success(request, order_id):
     order = get_object_or_404(Order, id=order_id)

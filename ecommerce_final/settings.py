@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     "paymentsapp.apps.PaymentsappConfig",
     "shippingapp.apps.ShippingappConfig",
     "returnsapp.apps.ReturnsappConfig",
-    "analyticsapp.apps.AnalyticsappConfig",
+    
 ]
 
 MIDDLEWARE = [
@@ -61,6 +61,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
 ]
 
 ROOT_URLCONF = 'ecommerce_final.urls'
@@ -158,6 +159,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'sajidmallick204@gmail.com'
 EMAIL_HOST_PASSWORD = 'vupl qito cuyw zvuy'
+DEFAULT_FROM_EMAIL = 'sajidmallick204@gmail.com'
 
 
 # Razorpay settings

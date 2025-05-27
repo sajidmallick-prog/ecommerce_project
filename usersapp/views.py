@@ -28,11 +28,11 @@ logger = logging.getLogger(__name__)
 @custom_login_required
 def order_list(request):
     orders = Order.objects.filter(user=request.user)
-    return render(request, 'orderapp/order_list.html', {'orders': orders}) 
+    return render(request, 'orders/order_list.html', {'orders': orders}) 
     
 # @login_required(login_url='customer_login')
 def myAccount(request):
-    return render(request, 'usersapp/my_account.html', {
+    return render(request, 'usersapp/myAccount.html', {
         'user': request.user,
     })
 
@@ -58,17 +58,23 @@ def activate(request, uidb64, token):
 
 def send_verification_email(request, user, mail_subject, email_template):
     """Function to send an email verification link"""
-    current_site = get_current_site(request)
-    message = render_to_string(email_template, {
-        'user': user,
-        'domain': current_site.domain,
-        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-        'token': default_token_generator.make_token(user),
-    })
-    to_email = user.email
-    email = EmailMessage(mail_subject, message, settings.DEFAULT_FROM_EMAIL, [to_email])
-    email.content_subtype = "html"
-    email.send()
+    try:
+        current_site = get_current_site(request)
+        message = render_to_string(email_template, {
+            'user': user,
+            'domain': current_site.domain,
+            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+            'token': default_token_generator.make_token(user),
+        })
+        to_email = user.email
+        email = EmailMessage(mail_subject, message, settings.DEFAULT_FROM_EMAIL, [to_email])
+        email.content_subtype = "html"
+        email.send()
+        
+        print(f"✅ Verification email sent to {to_email}")
+    except Exception as e:
+        print(f"❌ Email sending failed: {e}")
+
 
 
 def admin_registration(request):
@@ -192,7 +198,7 @@ def customer_login(request):
                 
                 # Check if the request is AJAX
                 if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-                    return JsonResponse({"success": True, "redirect_url": "/usersapp/myAccount/"})
+                    return JsonResponse({"success": True, "redirect_url": "/users/myAccount/"})
                 else:
                     return redirect('myAccount')
             else:
@@ -220,6 +226,7 @@ def logout(request):
     return redirect('home')
     add_never_cache_headers(response)
     return response
+
 
 
 from django.http import JsonResponse

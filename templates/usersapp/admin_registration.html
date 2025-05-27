@@ -2,18 +2,60 @@
 
 {% block content %}
 
-<div class="page-heading about-heading header-text">
+<!-- HTML -->
+<div class="registration-header">
     <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="text-content">
-            <h4>Register Yourself</h4>
-            <h2>New Account</h2>
-          </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <div class="header-content">
+                    <h1 class="display-4">Register Your Account</h1>
+                    <p class="lead">Join us today and unlock exclusive benefits</p>
+                    <div class="divider"></div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
 </div>
+
+<!-- CSS -->
+<style>
+    .registration-header {
+        background: linear-gradient(135deg, #6e8efb, #a777e3);
+        padding: 100px 0;
+        color: white;
+        margin-bottom: 40px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+
+    .header-content h1 {
+        font-weight: 700;
+        margin-bottom: 15px;
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+    }
+
+    .header-content p {
+        font-size: 1.25rem;
+        opacity: 0.9;
+    }
+
+    .divider {
+        width: 80px;
+        height: 4px;
+        background: rgba(255,255,255,0.7);
+        margin: 20px auto;
+        border-radius: 2px;
+    }
+
+    @media (max-width: 768px) {
+        .registration-header {
+            padding: 70px 0;
+        }
+        
+        .header-content h1 {
+            font-size: 2.2rem;
+        }
+    }
+</style>
 
 <section style="padding-top: 120px; padding-bottom: 50px;">
     <div class="d-flex justify-content-center align-items-center">
